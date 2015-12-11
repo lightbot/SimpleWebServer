@@ -94,7 +94,7 @@ class WSGIServer(object):
         self.headers_set = [status, response_headers + server_headers]
         # To adhere to WSGI specification the start_response must return
         # a 'write' callable. We simplicity's sake we'll ignore that detail
-        # for now
+        # for now.
 
         return self.finish_response
 
