@@ -20,7 +20,7 @@ class WSGIServer(object):
         )
 
         # Allow to reuse the same address
-        listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
+        listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         # Bind
         listen_socket.bind(server_address)
         # Activate
@@ -118,6 +118,7 @@ class WSGIServer(object):
             self.client_connection.close()
 
 SERVER_ADDRESS = (HOST, PORT) = '', 8888
+
 
 def make_server(server_address, application):
     server = WSGIServer(server_address)
