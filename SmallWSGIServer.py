@@ -48,7 +48,7 @@ class WSGIServer(object):
         self.request_data = request_data = self.client_connection.recv(1024)
         # Print formatted request data a la "curl -v"
         print(''.join(
-            '&lt; {line}\n'.format(line=line) for line in request_data.splitlines()
+            '< {line}\n'.format(line=line) for line in request_data.splitlines()
         ))
         self.parse_request(request_data)
 
@@ -79,7 +79,7 @@ class WSGIServer(object):
         env['wsgi.multiprecess']    = False
         env['wsgi.run_once']        = False
         # Required CGI variables
-        env['REQUESTS_METHOD']      = self.request_method  # GET
+        env['REQUEST_METHOD']       = self.request_method  # GET
         env['PATH_INFO']            = self.path # /hello
         env['SERVER_NAME']          = self.server_name
         env['SERVER_PORT']          = str(self.server_port)
@@ -104,13 +104,13 @@ class WSGIServer(object):
             response = "HTTP/1.1 {status}\r\n".format(status=status)
             for header in response_headers:
                 response += '{0}: {1}\r\n'.format(*header)
-            response += 'rn'
+            response += '\r\n'
             for data in result:
                 response += data
 
             # Print formatted response data a la 'curl -v'
             print(''.join(
-                '&gt; {line}\n'.format(line=line) for line in response.splitlines()
+                '> {line}\n'.format(line=line) for line in response.splitlines()
             ))
 
             self.client_connection.sendall(response)
