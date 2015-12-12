@@ -7,7 +7,7 @@ __author__ = 'light'
 
 ###############################################
 # Iterative server version 1.0                #
-# A simple web server which sleeps 60 seconds #
+# A simple web server which sleeps 10 seconds #
 # after sending a response to client.         #
 ###############################################
 

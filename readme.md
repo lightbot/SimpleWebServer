@@ -48,7 +48,7 @@ WSGI是  Python Web Server Gateway Interface 的缩写，是Python应用程序�
 + 通常来说，应用程序对象定义 `def application(environ, start_response)` ，Web服务器定义 `environ`，`start_response` ，前者用于描述服务器信息，后者用于描述响应的头部信息；
 + Web服务器在监听到一个HTTP请求后，使用 `application` 方法得到响应体，建立响应后发送给客户端。
 
-## 三、僵尸进程（zombie process）
+## 三、Unix中的僵尸进程（zombie process）
 
 以下内容部分参考了[《UNIX环境高级编程》](http://book.douban.com/subject/1788421/)第8.5节和第8.6节的内容。
 
@@ -74,3 +74,5 @@ WSGI是  Python Web Server Gateway Interface 的缩写，是Python应用程序�
 
 如果僵尸进程越来越多，会占用大量系统资源，极端情况下服务器会最终耗尽资源。因此父进程一定要记得调用wait系统获取终止信息。但是，如果调用wait时没有终止的子进程，wait会将父进程阻塞掉，因此组合使用信号处理器和wait是一种更好地方法。这种组合方法的基本思路是，当一个子进程终止时，内核会发送SIGCHLD信号给父进程，父进程可以设置一个信号处理器来异步的被通知，当收到信号时，使用wait获取子进程的终止状态，从而阻止僵尸进程的出现。
 
+
+需要注意的是，Windows对进程的设计中，进程相对平等，子进程可以独立的终止，不需要父进程进行回收操作，因此在Windows操作系统中不存在僵尸进程的问题。
